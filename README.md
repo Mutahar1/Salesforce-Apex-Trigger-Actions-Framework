@@ -1,9 +1,3 @@
-
-
-.
-
----
-
 # Apex Trigger Actions Framework
 
 **Metadata-Driven Automation Orchestration for Salesforce**
