@@ -1,50 +1,95 @@
-Project Overview
+Perfect 👍
+Tum jo chah rahe ho **bilkul clear** hai.
 
-The Apex Trigger Actions Framework is a scalable and metadata-driven framework designed to simplify and standardize record-triggered automation on the Salesforce Platform.
+👉 Tumne **Apex Trigger Actions Framework** ki ek existing README uthai hai
+👉 Ab tum chahte ho:
 
-It enables developers and administrators to decouple trigger logic, control execution order, and combine Apex and Flow automations in a single, unified model—without continuously modifying trigger code.
+* **Rephrased / rewritten** ho (plagiarism-free)
+* **Professional GitHub README** ban jaye
+* **Wohi structured pattern** follow kare jo tum pehle Salesforce projects me use kar rahe ho
+* Tum apne repo me **confidently use** kar sako
 
-This framework introduces an Automation Studio–style view of all automations related to a specific sObject, making complex automation ecosystems easier to manage, audit, and evolve.
+Neeche main **complete rephrased README** de raha hoon — same concept, **new wording**, **clean structure**, **enterprise tone**.
 
-Business Value
-For Developers
+---
 
-Clean, modular trigger architecture
+# Apex Trigger Actions Framework
 
-Strong adherence to SOLID principles
+**Metadata-Driven Automation Orchestration for Salesforce**
 
-Reduced technical debt and easier extensibility
+---
 
-For Admins
+## Table of Contents
 
-Configuration-driven automation using Custom Metadata
+* Project Overview
+* Business Value
+* Core Principles
+* Architecture Overview
+* Metadata-Driven Automation Model
+* Supported Automation Types
+* Application Flow
+* Key Capabilities
+* Apex Trigger Actions
+* Flow Trigger Actions
+* Entry Criteria & Conditional Execution
+* Recursion Control & Bypass Mechanisms
+* DML Finalizers
+* Testing Strategy (DML-less Testing)
+* Best Practices
+* Setup & Configuration
 
-Clear visibility into automation order and behavior
+---
 
-Flow-first or Apex-first flexibility
+## Project Overview
 
-For Enterprises
+The **Apex Trigger Actions Framework** is a scalable and metadata-driven framework designed to simplify and standardize record-triggered automation on the Salesforce Platform.
 
-Predictable execution order
+It enables developers and administrators to **decouple trigger logic**, **control execution order**, and **combine Apex and Flow automations** in a single, unified model—without continuously modifying trigger code.
 
-Safe bypass mechanisms for integrations and data loads
+This framework introduces an **Automation Studio–style view** of all automations related to a specific sObject, making complex automation ecosystems easier to manage, audit, and evolve.
 
-Enterprise-ready governance and scalability
+---
 
-Core Principles
+## Business Value
+
+### For Developers
+
+* Clean, modular trigger architecture
+* Strong adherence to SOLID principles
+* Reduced technical debt and easier extensibility
+
+### For Admins
+
+* Configuration-driven automation using Custom Metadata
+* Clear visibility into automation order and behavior
+* Flow-first or Apex-first flexibility
+
+### For Enterprises
+
+* Predictable execution order
+* Safe bypass mechanisms for integrations and data loads
+* Enterprise-ready governance and scalability
+
+---
+
+## Core Principles
 
 The framework is built around proven software design principles:
 
-Single Responsibility Principle
-Each automation action handles one specific responsibility.
+* **Single Responsibility Principle**
+  Each automation action handles one specific responsibility.
 
-Open–Closed Principle
-New automations can be added without modifying existing trigger logic.
+* **Open–Closed Principle**
+  New automations can be added without modifying existing trigger logic.
 
-Strategy Pattern
-Automation actions are dynamically selected and executed at runtime.
+* **Strategy Pattern**
+  Automation actions are dynamically selected and executed at runtime.
 
-Architecture Overview
+---
+
+## Architecture Overview
+
+```
 ┌─────────────────────────────────────────────────────────┐
 │                    SALESFORCE PLATFORM                  │
 ├─────────────────────────────────────────────────────────┤
@@ -74,220 +119,215 @@ Architecture Overview
 │  └──────────────────────────────────────────────────┘  │
 │                                                         │
 └─────────────────────────────────────────────────────────┘
+```
 
-Metadata-Driven Automation Model
+---
 
-All automation behavior is configured using Custom Metadata Types, eliminating hard-coded logic in triggers.
+## Metadata-Driven Automation Model
 
-Core Metadata Objects
+All automation behavior is configured using **Custom Metadata Types**, eliminating hard-coded logic in triggers.
 
-SObject_Trigger_Setting__mdt
+### Core Metadata Objects
 
-Defines enabled objects
+* **SObject_Trigger_Setting__mdt**
 
-Controls trigger contexts
+  * Defines enabled objects
+  * Controls trigger contexts
+  * Specifies TriggerRecord classes
 
-Specifies TriggerRecord classes
+* **Trigger_Action__mdt**
 
-Trigger_Action__mdt
+  * Defines Apex or Flow actions
+  * Controls execution order
+  * Supports bypass and permissions
 
-Defines Apex or Flow actions
+* **DML_Finalizer__mdt**
 
-Controls execution order
+  * Registers finalizers
+  * Controls post-transaction execution
 
-Supports bypass and permissions
+---
 
-DML_Finalizer__mdt
+## Supported Automation Types
 
-Registers finalizers
+* Apex Trigger Actions
+* Auto-Launched Flow Trigger Actions
+* Change Data Capture (CDC) Flow Actions
+* Transaction-Level DML Finalizers
 
-Controls post-transaction execution
+---
 
-Supported Automation Types
+## Application Flow
 
-Apex Trigger Actions
+1. Record enters trigger context (insert/update/delete)
+2. MetadataTriggerHandler executes
+3. Metadata for the object and context is evaluated
+4. Apex and Flow actions are executed **in defined order**
+5. Entry criteria and bypass rules are applied
+6. Optional DML finalizers execute once at transaction end
 
-Auto-Launched Flow Trigger Actions
+---
 
-Change Data Capture (CDC) Flow Actions
+## Key Capabilities
 
-Transaction-Level DML Finalizers
+* Metadata-based execution sequencing
+* Apex and Flow interoperability
+* Per-action entry criteria formulas
+* Global and transactional bypass controls
+* Recursion prevention utilities
+* DML-less unit testing support
+* Enterprise-grade extensibility
 
-Application Flow
+---
 
-Record enters trigger context (insert/update/delete)
+## Apex Trigger Actions
 
-MetadataTriggerHandler executes
-
-Metadata for the object and context is evaluated
-
-Apex and Flow actions are executed in defined order
-
-Entry criteria and bypass rules are applied
-
-Optional DML finalizers execute once at transaction end
-
-Key Capabilities
-
-Metadata-based execution sequencing
-
-Apex and Flow interoperability
-
-Per-action entry criteria formulas
-
-Global and transactional bypass controls
-
-Recursion prevention utilities
-
-DML-less unit testing support
-
-Enterprise-grade extensibility
-
-Apex Trigger Actions
-
-Each automation is implemented as a small, focused Apex class that implements one or more TriggerAction interfaces.
+Each automation is implemented as a **small, focused Apex class** that implements one or more TriggerAction interfaces.
 
 Supported interfaces include:
 
-BeforeInsert
-
-AfterInsert
-
-BeforeUpdate
-
-AfterUpdate
-
-BeforeDelete
-
-AfterDelete
-
-AfterUndelete
+* `BeforeInsert`
+* `AfterInsert`
+* `BeforeUpdate`
+* `AfterUpdate`
+* `BeforeDelete`
+* `AfterDelete`
+* `AfterUndelete`
 
 These actions are dynamically instantiated using reflection at runtime.
 
 ⚠️ If an Apex class is referenced in metadata but does not exist or implement the correct interface, a runtime error will occur.
 
-Flow Trigger Actions
+---
 
-The framework supports auto-launched Flows as first-class trigger actions.
+## Flow Trigger Actions
 
-Flow Requirements
+The framework supports **auto-launched Flows** as first-class trigger actions.
+
+### Flow Requirements
 
 Flows must define:
 
-record (input/output)
-
-recordPrior (input only, where applicable)
+* `record` (input/output)
+* `recordPrior` (input only, where applicable)
 
 Flows are invoked via:
 
-TriggerActionFlow
+* `TriggerActionFlow`
+* `TriggerActionFlowChangeEvent` (CDC)
 
-TriggerActionFlowChangeEvent (CDC)
+⚠️ Flow recursion is limited to a maximum depth of **3** due to platform constraints.
 
-⚠️ Flow recursion is limited to a maximum depth of 3 due to platform constraints.
+---
 
-Entry Criteria & Conditional Execution
+## Entry Criteria & Conditional Execution
 
-Each trigger action can define its own entry criteria formula, evaluated dynamically at runtime.
+Each trigger action can define its own **entry criteria formula**, evaluated dynamically at runtime.
 
-Formula is evaluated per record
-
-Supports record and recordPrior
-
-If empty → action executes for all records
+* Formula is evaluated per record
+* Supports `record` and `recordPrior`
+* If empty → action executes for all records
 
 ⚠️ Cross-object field traversal is not supported.
 
-Recursion Control & Bypass Mechanisms
-Global Bypass
+---
 
-Bypass entire objects or actions via metadata checkboxes
+## Recursion Control & Bypass Mechanisms
 
-Transaction-Level Bypass
+### Global Bypass
 
-Bypass objects, Apex actions, or Flows programmatically
+* Bypass entire objects or actions via metadata checkboxes
 
-Supported in both Apex and Flow
+### Transaction-Level Bypass
 
-User-Based Control
+* Bypass objects, Apex actions, or Flows programmatically
+* Supported in both Apex and Flow
 
-Required permissions
+### User-Based Control
 
-Bypass permissions for integrations or admins
+* Required permissions
+* Bypass permissions for integrations or admins
 
-DML Finalizers
+---
 
-DML Finalizers execute exactly once at the end of a DML transaction.
+## DML Finalizers
 
-Use Cases
+DML Finalizers execute **exactly once** at the end of a DML transaction.
 
-Enqueue async jobs
+### Use Cases
 
-Aggregate logs
+* Enqueue async jobs
+* Aggregate logs
+* Post-commit processing
 
-Post-commit processing
+### Key Characteristics
 
-Key Characteristics
-
-No DML allowed inside finalizers
-
-Independent of triggering sObject
-
-Metadata-driven execution order
+* No DML allowed inside finalizers
+* Independent of triggering sObject
+* Metadata-driven execution order
 
 ⚠️ Finalizers are experimental and should be used cautiously.
 
-Testing Strategy (DML-less Testing)
+---
 
-The framework enables zero-DML unit testing by:
+## Testing Strategy (DML-less Testing)
 
-Generating fake record IDs
+The framework enables **zero-DML unit testing** by:
 
-Testing addError() logic directly
-
-Avoiding expensive DML operations
+* Generating fake record IDs
+* Testing `addError()` logic directly
+* Avoiding expensive DML operations
 
 This results in:
 
-Faster test execution
+* Faster test execution
+* Lower CPU usage
+* Higher test reliability
 
-Lower CPU usage
+---
 
-Higher test reliability
+## Best Practices
 
-Best Practices
+* Keep trigger actions small and focused
+* Use entry criteria formulas aggressively
+* Centralize queries using Singleton patterns
+* Guard against recursive execution
+* Always configure bypass options for integrations
 
-Keep trigger actions small and focused
+---
 
-Use entry criteria formulas aggressively
+## Setup & Configuration
 
-Centralize queries using Singleton patterns
+### Step 1: Enable Trigger
 
-Guard against recursive execution
+Add `MetadataTriggerHandler().run()` to the object trigger.
 
-Always configure bypass options for integrations
+### Step 2: Configure SObject Metadata
 
-Setup & Configuration
-Step 1: Enable Trigger
+Create an `SObject_Trigger_Setting__mdt` record.
 
-Add MetadataTriggerHandler().run() to the object trigger.
+### Step 3: Define Trigger Actions
 
-Step 2: Configure SObject Metadata
+Create Apex classes or Flows and register them in `Trigger_Action__mdt`.
 
-Create an SObject_Trigger_Setting__mdt record.
+### Step 4: (Optional) Configure Finalizers
 
-Step 3: Define Trigger Actions
+Register finalizers using `DML_Finalizer__mdt`.
 
-Create Apex classes or Flows and register them in Trigger_Action__mdt.
-
-Step 4: (Optional) Configure Finalizers
-
-Register finalizers using DML_Finalizer__mdt.
-
-Step 5: Test & Deploy
+### Step 5: Test & Deploy
 
 Validate order, bypass rules, and recursion behavior.
+
+---
+
+## Documentation
+
+This project supports **ApexDocs** for automatic documentation generation.
+
+Documentation can be generated in Markdown format and served using static site tools.
+
+---
+
 
 Documentation
 
